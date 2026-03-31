@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FarmAI - Smart Crop Production Prediction</title>
+  <meta name="description" content="AI-powered crop production prediction for Indian agriculture. Covering 33 states, 700+ districts, and 124 crops.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌾</text></svg>">
+</head>
+<body>
+
+<!-- ═══════════════ NAVBAR ═══════════════ -->
+<nav class="navbar">
+  <a href="#home" class="nav-logo">
+    <span class="logo-icon">🌾</span>
+    <span>FarmAI</span>
+  </a>
+  <div class="nav-links" id="navLinks">
+    <a href="#home" data-i18n="nav_home">Home</a>
+    <a href="#predict" data-i18n="nav_predict">Predict</a>
+    <a href="#historical" data-i18n="nav_history">Historical Data</a>
+    <a href="#about" data-i18n="nav_about">About</a>
+    <button class="lang-toggle" id="langToggle" data-i18n="lang_btn">हिन्दी</button>
+  </div>
+  <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<section class="hero" id="home">
+  <div class="hero-content">
+    <div class="hero-badge">🤖 AI-Powered Agriculture</div>
+    <h1 data-i18n="hero_title">Smart Crop Production Prediction</h1>
+    <p data-i18n="hero_sub">AI-powered insights to help farmers & agri-businesses make better decisions</p>
+    <div class="hero-buttons">
+      <a href="#predict" class="btn-primary" data-i18n="hero_cta">
+        Start Predicting
+      </a>
+      <a href="#about" class="btn-secondary" data-i18n="hero_learn">
+        Learn More
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ STATS BAR ═══════════════ -->
+<div class="stats-bar">
+  <div class="stat-card fade-up">
+    <div class="stat-number">33</div>
+    <div class="stat-label" data-i18n="stat_states">States Covered</div>
+  </div>
+  <div class="stat-card fade-up">
+    <div class="stat-number">700+</div>
+    <div class="stat-label" data-i18n="stat_districts">Districts</div>
+  </div>
+  <div class="stat-card fade-up">
+    <div class="stat-number">124</div>
+    <div class="stat-label" data-i18n="stat_crops">Crop Varieties</div>
+  </div>
+  <div class="stat-card fade-up">
+    <div class="stat-number">2.4L+</div>
+    <div class="stat-label" data-i18n="stat_records">Historical Records</div>
+  </div>
+</div>
+
+<!-- ═══════════════ FEATURES ═══════════════ -->
+<section class="section features" id="features">
+  <div class="section-header fade-up">
+    <h2 data-i18n="feat_title">Why FarmAI?</h2>
+    <p data-i18n="feat_sub">Empowering agriculture with artificial intelligence</p>
+  </div>
+  <div class="features-grid">
+    <div class="feature-card fade-up">
+      <div class="feature-icon">🧠</div>
+      <h3 data-i18n="feat1_title">AI Crop Prediction</h3>
+      <p data-i18n="feat1_desc">Predict future crop production using machine learning trained on 18+ years of real agricultural data.</p>
+    </div>
+    <div class="feature-card fade-up">
+      <div class="feature-icon">📊</div>
+      <h3 data-i18n="feat2_title">Historical Analysis</h3>
+      <p data-i18n="feat2_desc">Explore historical production data across all Indian states, districts, crops and seasons.</p>
+    </div>
+    <div class="feature-card fade-up">
+      <div class="feature-icon">💡</div>
+      <h3 data-i18n="feat3_title">Smart Recommendations</h3>
+      <p data-i18n="feat3_desc">Know whether your crop-region combination has historical precedence before you invest.</p>
+    </div>
+    <div class="feature-card fade-up">
+      <div class="feature-icon">🔌</div>
+      <h3 data-i18n="feat4_title">Easy API Integration</h3>
+      <p data-i18n="feat4_desc">REST API ready for integration into any existing agri-tech platform or mobile app.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ PREDICT ═══════════════ -->
+<section class="section predict-section" id="predict">
+  <div class="predict-container">
+    <div class="section-header fade-up">
+      <h2 data-i18n="pred_title">Predict Crop Production</h2>
+      <p data-i18n="pred_sub">Enter details below to get an AI-powered production estimate</p>
+    </div>
+
+    <!-- Form -->
+    <div class="predict-form fade-up" id="predictForm">
+      <div class="form-grid">
+        <div class="form-group">
+          <label data-i18n="pred_state">Select State</label>
+          <select id="stateSelect"><option value="">-- Select --</option></select>
+        </div>
+        <div class="form-group">
+          <label data-i18n="pred_district">Select District</label>
+          <select id="districtSelect"><option value="">-- Select --</option></select>
+        </div>
+        <div class="form-group">
+          <label data-i18n="pred_crop">Select Crop</label>
+          <select id="cropSelect"><option value="">-- Select --</option></select>
+        </div>
+        <div class="form-group">
+          <label data-i18n="pred_season">Select Season</label>
+          <select id="seasonSelect"><option value="">-- Select --</option></select>
+        </div>
+        <div class="form-group">
+          <label data-i18n="pred_year">Crop Year</label>
+          <input type="number" id="yearInput" min="1900" max="2100" value="2025">
+        </div>
+        <div class="form-group">
+          <label data-i18n="pred_area">Cultivated Area (hectares)</label>
+          <input type="number" id="areaInput" min="0.1" step="0.1" placeholder="e.g. 5000">
+        </div>
+      </div>
+      <button class="predict-btn" id="predictBtn" data-i18n="pred_btn">
+        Predict Production
+      </button>
+    </div>
+
+    <!-- Result (hidden initially) -->
+    <div class="result-container" id="resultContainer">
+      <div class="result-card">
+        <div class="result-header">
+          <h3 data-i18n="res_production">Predicted Production</h3>
+          <div>
+            <span class="result-value" id="resultValue">0</span>
+            <span class="result-unit" data-i18n="res_tonnes">tonnes</span>
+          </div>
+        </div>
+        <div class="result-body">
+          <div id="matchBadge"></div>
+          <p class="match-desc" id="matchDesc"></p>
+
+          <div id="histMatchesSection" style="display:none;">
+            <h4 data-i18n="res_hist_title" style="margin-bottom:0.75rem; color:var(--green-900);">Historical Records</h4>
+            <div style="overflow-x:auto;">
+              <table class="hist-matches-table">
+                <thead>
+                  <tr>
+                    <th data-i18n="res_year">Year</th>
+                    <th data-i18n="res_area">Area (ha)</th>
+                    <th data-i18n="res_prod">Production</th>
+                  </tr>
+                </thead>
+                <tbody id="histMatchesBody"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <button class="btn-new-pred" id="newPredBtn" data-i18n="res_new">Make Another Prediction</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ HISTORICAL ═══════════════ -->
+<section class="section historical-section" id="historical">
+  <div class="hist-container">
+    <div class="section-header fade-up">
+      <h2 data-i18n="hist_title">Historical Data Explorer</h2>
+      <p data-i18n="hist_sub">Browse 18+ years of Indian agricultural production data</p>
+    </div>
+
+    <div class="hist-filters fade-up">
+      <div class="form-group">
+        <label data-i18n="hist_state">Filter by State</label>
+        <select id="histState"><option value="" data-i18n="all">All</option></select>
+      </div>
+      <div class="form-group">
+        <label data-i18n="hist_crop">Filter by Crop</label>
+        <select id="histCrop"><option value="" data-i18n="all">All</option></select>
+      </div>
+      <div class="form-group">
+        <label data-i18n="hist_season">Filter by Season</label>
+        <select id="histSeason"><option value="" data-i18n="all">All</option></select>
+      </div>
+      <div class="form-group" style="justify-content:flex-end;">
+        <button class="hist-btn hist-btn-search" id="histSearchBtn" data-i18n="hist_search">Search</button>
+      </div>
+      <div class="form-group" style="justify-content:flex-end;">
+        <button class="hist-btn hist-btn-reset" id="histResetBtn" data-i18n="hist_reset">Reset</button>
+      </div>
+    </div>
+
+    <div class="hist-table-wrapper fade-up">
+      <table class="hist-table">
+        <thead>
+          <tr>
+            <th data-i18n="hist_sno">#</th>
+            <th data-i18n="hist_state_col">State</th>
+            <th data-i18n="hist_district_col">District</th>
+            <th data-i18n="hist_crop_col">Crop</th>
+            <th data-i18n="hist_season_col">Season</th>
+            <th data-i18n="hist_year_col">Year</th>
+            <th data-i18n="hist_area_col">Area (ha)</th>
+            <th data-i18n="hist_prod_col">Production</th>
+          </tr>
+        </thead>
+        <tbody id="histTableBody">
+          <tr><td colspan="8" class="hist-empty" data-i18n="hist_no_data">Select filters and click Search to view data.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <button class="load-more-btn" id="loadMoreBtn" style="display:none;" data-i18n="hist_load_more">Load More</button>
+  </div>
+</section>
+
+<!-- ═══════════════ ABOUT ═══════════════ -->
+<section class="section about-section" id="about">
+  <div class="section-header fade-up">
+    <h2 data-i18n="about_title">About FarmAI</h2>
+  </div>
+  <div class="about-container">
+    <div class="about-text fade-up">
+      <p data-i18n="about_p1">FarmAI is an AI-powered crop production prediction platform built to help farmers, agri-businesses, and policy makers make data-driven decisions.</p>
+      <p data-i18n="about_p2">Our machine learning model is trained on 18+ years of real Indian agricultural data covering 33 states, 700+ districts, and 124 crop varieties. It uses a Random Forest algorithm to predict crop production based on location, crop type, season, year, and cultivated area.</p>
+      <p data-i18n="about_p3">Built by Dharmender Singh Yadav, a B.Tech graduate in AI & Data Science with deep roots in farming — because technology should serve the people who feed the nation.</p>
+    </div>
+    <div class="model-info fade-up">
+      <h3><span>🧠</span> <span data-i18n="about_model">Model Info</span></h3>
+      <div class="model-row">
+        <span class="label" data-i18n="about_algo">Algorithm</span>
+        <span class="value" data-i18n="about_algo_val">Random Forest (150 trees)</span>
+      </div>
+      <div class="model-row">
+        <span class="label" data-i18n="about_features">Features Used</span>
+        <span class="value" data-i18n="about_features_val">State, District, Crop, Season, Year, Area</span>
+      </div>
+      <div class="model-row">
+        <span class="label" data-i18n="about_data">Training Data</span>
+        <span class="value" data-i18n="about_data_val">1997 - 2015 (Indian Agriculture)</span>
+      </div>
+      <div class="r2-bar">
+        <span class="label" data-i18n="about_accuracy">Model R² Score</span>
+        <div class="r2-track"><div class="r2-fill" id="r2Fill" style="width:0%"></div></div>
+        <div class="r2-value" id="r2Value">0.00</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer class="footer">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <h3><span>🌾</span> FarmAI</h3>
+      <p data-i18n="footer_desc">AI-powered crop production prediction for smarter farming.</p>
+    </div>
+    <div class="footer-col">
+      <h4 data-i18n="footer_links">Quick Links</h4>
+      <a href="#home" data-i18n="nav_home">Home</a>
+      <a href="#predict" data-i18n="nav_predict">Predict</a>
+      <a href="#historical" data-i18n="nav_history">Historical Data</a>
+      <a href="#about" data-i18n="nav_about">About</a>
+    </div>
+    <div class="footer-col">
+      <h4 data-i18n="footer_contact">Contact</h4>
+      <a href="mailto:dharmender@farmai.in">dharmender@farmai.in</a>
+      <a>Dharmender Singh Yadav</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2025 FarmAI. <span data-i18n="footer_rights">All rights reserved.</span></span>
+    <span data-i18n="footer_built">Built with AI & Farming Knowledge</span>
+  </div>
+</footer>
+
+<script src="/static/js/translations.js"></script>
+<script src="/static/js/app.js"></script>
+</body>
+</html>
