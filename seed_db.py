@@ -2,14 +2,14 @@
 seed_db.py
 ----------
 Reads the cleaned CSV and bulk-inserts all records into the
-`historical_records` SQLite table.  Run ONCE after cleaning.
+`historical_records` SQLite table using csv module (no pandas needed).
 
 Usage:
     python seed_db.py
 """
 
+import csv
 import os
-import pandas as pd
 from sqlalchemy.orm import Session
 
 from database import engine, SessionLocal, Base
@@ -32,29 +32,35 @@ def seed(clean_path: str = CLEAN_PATH):
         db.close()
         return
 
-    print(f"Loading cleaned data from {clean_path}...")
-    df = pd.read_csv(clean_path)
-    total = len(df)
-    print(f"Inserting {total:,} rows in batches of {BATCH_SIZE}...")
+    if not os.path.exists(clean_path):
+        print(f"Warning: {clean_path} not found. Skipping seed.")
+        db.close()
+        return
 
+    print(f"Loading cleaned data from {clean_path}...")
     records = []
-    for i, row in enumerate(df.itertuples(index=False), 1):
-        records.append(
-            models.HistoricalRecord(
-                state_name    = str(row.state_name),
-                district_name = str(row.district_name),
-                crop          = str(row.crop),
-                season        = str(row.season),
-                crop_year     = int(row.crop_year),
-                area          = float(row.area),
-                production    = float(row.production),
+    total = 0
+
+    with open(clean_path, "r", newline="") as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            total += 1
+            records.append(
+                models.HistoricalRecord(
+                    state_name    = row["state_name"],
+                    district_name = row["district_name"],
+                    crop          = row["crop"],
+                    season        = row["season"],
+                    crop_year     = int(row["crop_year"]),
+                    area          = float(row["area"]),
+                    production    = float(row["production"]),
+                )
             )
-        )
-        if len(records) >= BATCH_SIZE:
-            db.bulk_save_objects(records)
-            db.commit()
-            records = []
-            print(f"  Inserted {i:,} / {total:,}", end="\r")
+            if len(records) >= BATCH_SIZE:
+                db.bulk_save_objects(records)
+                db.commit()
+                records = []
+                print(f"  Inserted {total:,} rows...", end="\r")
 
     if records:
         db.bulk_save_objects(records)
